@@ -1,0 +1,6 @@
+{
+    "config": {
+        "categories": ["以 M 开头的库", "以 Kit 结尾的库", "其它"],
+        "categoryRegexes": ["^M.*", ".*(Kit)$", ".*"]
+    }
+}

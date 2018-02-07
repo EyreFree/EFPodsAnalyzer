@@ -1,0 +1,37 @@
+{
+	"gexf": {
+		"meta": {
+			"creator": "Gephi 0.8.1",
+			"description": "",
+			"_lastmodifieddate": "2014-01-30"
+		},
+		"graph": {
+			"attributes": {
+				"attribute": {
+					"_id": "modularity_class",
+					"_title": "Modularity Class",
+					"_type": "integer"
+				},
+				"_class": "node",
+				"_mode": "static"
+			},
+			"nodes": {
+				"node": [
+					$nodes$
+				]
+			},
+			"edges": {
+				"edge": [
+					$edges$
+				]
+			},
+			"_defaultedgetype": "undirected",
+			"_mode": "static"
+		},
+		"_xmlns": "http://www.gexf.net/1.2draft",
+		"_xmlns:viz": "http://www.gexf.net/1.2draft/viz",
+		"_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+		"_version": "1.2",
+		"_xsi:schemaLocation": "http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd"
+	}
+}
