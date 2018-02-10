@@ -83,7 +83,7 @@ def readManifestPodListFromFile(fileName):
    index = index + 1
    lastObject = ManifestPodClass(podName, [])
   else:
-   print 'Error: The Manifest.lock file is corrupted!'
+   print('Error: The Manifest.lock file is corrupted!')
    exit(ERROR_FILE_CORRUPTED)
  returnList.append(lastObject)
  return returnList
