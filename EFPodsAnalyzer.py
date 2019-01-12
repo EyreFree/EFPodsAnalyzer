@@ -79,11 +79,12 @@ def readManifestPodListFromFile(fileName):
     index = -1
     lastObject = ManifestPodClass('', [])
     for line in podsStringList:
-        podName = line.lstrip(' -').split(' ')[0]
-        if line.startswith('    - '):
+        lineClean = line.replace('\'','').replace('\"','')
+        podName = lineClean.lstrip(' -').split(' ')[0]
+        if lineClean.startswith('    - '):
             if index >= 0:
                 lastObject.podDependencies.append(podName)
-        elif line.startswith('  - '):
+        elif lineClean.startswith('  - '):
             if index >= 0:
                 returnList.append(lastObject)
             index = index + 1
