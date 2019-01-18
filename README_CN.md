@@ -21,7 +21,7 @@
     </a>
 </p>
 
-EFPodsAnalyzer 是一个用来帮助我们梳理项目 CoaoaPods 库依赖关系的 Python 脚本，一个命令即可生成清晰的 Pods 依赖关系图，给我们的依赖整理 / 组件清理工作带来一定的帮助。
+EFPodsAnalyzer 是一个用来帮助我们梳理项目 CoaoaPods 库依赖关系的 Python 脚本，一个命令即可生成清晰的 Pods 依赖关系图，给我们的依赖整理 / 组件清理工作带来一定的帮助（广告：EF 的组件化 / 模块化总结 [蜂鸟商家版 iOS 组件化 / 模块化实践总结](https://juejin.im/post/5a620cf5f265da3e36415764) 望能够给大家提供一些参考）。
 
 > [English Introduction](/README.md)
 
