@@ -17,10 +17,9 @@ ERROR_FILE_CORRUPTED = 4    # 文件损坏或格式不正确
 
 # 文件名长度
 SELF_FILENAME_LEN = len(sys.argv[0].split('/')[-1])
+POD_FILENAME_LEN = len(sys.argv[1].split('/')[-1])
 
 # 原始数据单元
-
-
 class ManifestPodClass:
     'Manifest中取出的未处理数据单元'
     podName = ''
@@ -39,8 +38,6 @@ class ManifestPodClass:
             print(object.podName, object.podDependencies)
 
 # 最终数据单元
-
-
 class PodClass:
     '处理后的数据单元'
     podName = ''
@@ -62,8 +59,6 @@ class PodClass:
             print(object.podName, object.podDependencyIndexes)
 
 # 从 Manifest.lock 读取 PODS 原始数据单元列表
-
-
 def readManifestPodListFromFile(fileName):
     fo = open(fileName, "r+")
     manifestFileContent = fo.read()
@@ -96,8 +91,6 @@ def readManifestPodListFromFile(fileName):
     return returnList
 
 # 从 ManifestPodList 生成最终数据单元列表
-
-
 def generatePodListFromList(manifestPodList):
     def getBaseIndexes(dependencies, baseList):
         returnList = []
@@ -126,11 +119,9 @@ def generatePodListFromList(manifestPodList):
     return returnList
 
 # 生成依赖关系图
-
-
 def generateDependencyGraph(podlist):
     # Setting
-    cc = open(sys.argv[0][:-SELF_FILENAME_LEN] + "config.json", "r+")
+    cc = open(podFilePath() + "EFPAConfig.json", "r+")
     configString = cc.read()
     cc.close()
 
@@ -141,7 +132,7 @@ def generateDependencyGraph(podlist):
     settingCategoryRegexes = configObject['config']['categoryRegexes']
     settingContent = "setting = '{\"setting\": {\"title\": \"" + \
         settingTitle + "\",\"categories\": " + str(settingCategories) + "}}';"
-    xx = open(sys.argv[0][:-SELF_FILENAME_LEN] + "docs/setting.json", "wr+")
+    xx = open(selfFilePath() + "docs/setting.json", "wr+")
     xx.write(settingContent)
     xx.close()
 
@@ -180,45 +171,61 @@ def generateDependencyGraph(podlist):
     if edgeString.endswith(","):
         edgeString = edgeString[:-1]
 
-    oo = open(sys.argv[0][:-SELF_FILENAME_LEN] + "template/data.json", "r+")
+    oo = open(selfFilePath() + "template/data.json", "r+")
     dataTemplate = oo.read()
     oo.close()
 
     dataContent = "data = \'" + dataTemplate.replace("$nodes$", nodeString).replace(
         "$edges$", edgeString).replace("\n", "") + "\';"
-    xx = open(sys.argv[0][:-SELF_FILENAME_LEN] + "docs/data.json", "wr+")
+    xx = open(selfFilePath() + "docs/data.json", "wr+")
     xx.write(dataContent)
     xx.close()
 
-    graphHtmlPath = sys.argv[0][:-SELF_FILENAME_LEN] + "docs/index.html"
+    graphHtmlPath = selfFilePath() + "docs/index.html"
     print("Dependency graph generated: " + graphHtmlPath)
 
     webbrowser.open("file://" + graphHtmlPath)
 
     return
 
+# 当前文件所在路径
+def selfFilePath():
+    return sys.argv[0][:-SELF_FILENAME_LEN]
 
-# 输入参数数量错误直接返回错误
-if 2 != len(sys.argv):
-    print('Error：Count of parameters is not correct!')
-    exit(ERROR_PARAMETERS_COUNT)
+# 目标文件所在路径
+def podFilePath():
+    return sys.argv[1][:-POD_FILENAME_LEN]
 
-# 输入文件不是 Podfile 直接返回错误
-if True != sys.argv[1].endswith('Podfile'):
-    print('Error: Illegal parameters!')
-    exit(ERROR_PARAMETERS_TYPE)
+# 目标文件上级目录名
+def podFileDirectoryName():
+    return sys.argv[1][:-8].split('/')[-1]
 
-# 判断 Pods 目录下的 Manifest.lock 是否存在，否则返回错误
-manifestFileName = sys.argv[1][:-4] + 's/Manifest.lock'
-if True != os.path.exists(manifestFileName):
-    print('Error: Please `pod install` first!')
-    exit(ERROR_NEED_PODS)
+# 主要
+def main():
+    # 输入参数数量错误直接返回错误
+    if 2 != len(sys.argv):
+        print('Error：Count of parameters is not correct!')
+        exit(ERROR_PARAMETERS_COUNT)
 
-# 读取 PODS 依赖关系并生成依赖关系数组
-manifestPodlist = readManifestPodListFromFile(manifestFileName)
-# ManifestPodClass.printList(manifestPodlist)
-podlist = generatePodListFromList(manifestPodlist)
-# PodClass.printList(podlist)
+    # 输入文件不是 Podfile 直接返回错误
+    if True != sys.argv[1].endswith('Podfile'):
+        print('Error: Illegal parameters!')
+        exit(ERROR_PARAMETERS_TYPE)
 
-# 生成依赖关系页面
-generateDependencyGraph(podlist)
+    # 判断 Pods 目录下的 Manifest.lock 是否存在，否则返回错误
+    manifestFileName = sys.argv[1][:-4] + 's/Manifest.lock'
+    if True != os.path.exists(manifestFileName):
+        print('Error: Please run `pod install` first!')
+        exit(ERROR_NEED_PODS)
+
+    # 读取 PODS 依赖关系并生成依赖关系数组
+    manifestPodlist = readManifestPodListFromFile(manifestFileName)
+    # ManifestPodClass.printList(manifestPodlist)
+    podlist = generatePodListFromList(manifestPodlist)
+    # PodClass.printList(podlist)
+
+    # 生成依赖关系页面
+    generateDependencyGraph(podlist)
+
+# 执行
+main()
