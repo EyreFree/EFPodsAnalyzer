@@ -37,6 +37,16 @@ The more the Pods library is, the more complex the library is, the more it is us
 
 ## Installation
 
+### PyPI
+
+If you have `pip` installed on your device, you can install the latest version of this tool directly with the following commands:
+
+```
+sudo pip install efpodsanalyzer --upgrade
+```
+
+### Manual
+
 Download this project, or execute the following commands to Clone this project:
 
 ```
@@ -45,19 +55,40 @@ git clone git@github.com:EyreFree/EFPodsAnalyzer.git
 
 ## Usage
 
+### PyPI
+
+1. First, ensure that your project has been operated on `pod install` and successfully generated the Pods directory;
+2. Install `efpodsanalyzer` on your device with `pip`;
+3. Classify the dependent libraries according to the specific circumstances of the projects to be analyzed, and give the regex of each category separately, then write the rules to the `EFPAConfig.json` file under the directory which contains the target `Podfile`;
+4. Execute the following commands for the generation of the dependency graph:
+
+```
+sudo efpodsanalyzer [Target Podfile file path]
+```
+
+5. You can check the output of the terminal. If you see the following log, you can open the generated file `index.html` in the path with your browser:
+
+```
+Dependency graph generated: .../EFPADiagram/index.html
+```
+
+If there is any error, please deal with the corresponding error information, or you can make a PR or an Issue.
+
+### Manual
+
 1. First, ensure that your project has been operated on `pod install` and successfully generated the Pods directory;
 2. The content of this tool has been fully downloaded to the local area;
-3. Classify the dependent libraries according to the specific circumstances of the projects to be analyzed, and give the regex of each category separately, then write the rules to the `config.json` file under the EFPodsAnalyzer root directory;
+3. Classify the dependent libraries according to the specific circumstances of the projects to be analyzed, and give the regex of each category separately, then write the rules to the `EFPAConfig.json` file under the directory which contains the target `Podfile`;
 4. Execute the following commands for the generation of the dependency graph:
 
 ```
 python [EFPodsAnalyzer.py file path] [Target Podfile file path]
 ```
 
-5. The result page will be automatically opened by browser. If nothing happened, you can check the output of the terminal. If you see the following log, you can manually open the generated file with the path:
+5. You can check the output of the terminal. If you see the following log, you can open the generated file `index.html` in the path with your browser:
 
 ```
-Dependency graph generated: .../EFPodsAnalyzer/doc/index.html
+Dependency graph generated: .../EFPADiagram/index.html
 ```
 
 If there is any error, please deal with the corresponding error information, or you can make a PR or an Issue.
@@ -66,14 +97,14 @@ If there is any error, please deal with the corresponding error information, or 
 
 Here we take [Coding's open source iOS client](https://github.com/Coding/Coding-iOS) as an example to show you the complete use of this tool:
 
-1. First, download the content of this tool to the local.
+1. First, install `efpodsanalyzer` on your device with `pip`.
 2. Then download the Coding iOS project to local, and perform `pod install` operation;
-3. Because the dependency of the Coding client is basically not classified, which is all the third party library. Therefore, for demonstration purposes, I divide it into three categories: the library with the beginning of 'M', the library ending with 'Kit' and the others. The `config.json` is as follows:
+3. Because the dependency of the Coding client is basically not classified, which is all the third party library. Therefore, for demonstration purposes, I divide it into three categories: the library with the beginning of 'M', the library ending with 'Kit' and the others. The `EFPAConfig.json` is as follows:
 
 ```
 {
     "config": {
-        "categories": ["以 M 开头的库", "以 Kit 结尾的库", "其它"],
+        "categories": ["M-prefixed Libraries", "Library ending with Kit", "Other"],
         "categoryRegexes": ["^M.*", ".*(Kit)$", ".*"]
     }
 }
@@ -82,7 +113,7 @@ Here we take [Coding's open source iOS client](https://github.com/Coding/Coding-
 4. The command to generate diagram is as follows:
 
 ```
-python /Users/eyrefree/Documents/iOS_GitHub/EFPodsAnalyzer/EFPodsAnalyzer.py /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
+sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 ```
 
 5. The final dependency graph is generated as follows:
@@ -98,11 +129,19 @@ You can also [view it online](https://eyrefree.github.io/EFPodsAnalyzer/index.ht
 ## Todo
 
 - Determine whether the dependency needs to be removed, according to the header file reference;
-- Determine whether the dependency needs to be removed, depending on the class dependency.
+- Determine whether the dependency needs to be removed, depending on the class dependency;
+- More style of diagrams.
 
 ## Other
 
-The view of dependency graph is based on [ECharts](https://github.com/ecomfe/echarts) and [xml2json](https://github.com/abdmob/x2js), thanks for their work!
+1. The view of dependency graph is based on [ECharts](https://github.com/ecomfe/echarts) and [xml2json](https://github.com/abdmob/x2js), thanks for their work!
+2. Code of this tool can be packaged / released using the following commands. People who needs to build a custom version can make some self exploration(Under the root directory of this project):
+
+ ```
+rm -rf dist/*;
+python setup.py sdist bdist_wheel;
+twine upload dist/efpodsanalyzer*;
+```
 
 ## Author
 
