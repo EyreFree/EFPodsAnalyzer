@@ -7,13 +7,15 @@ import json
 import os
 import re
 import sys
-import webbrowser
+# import webbrowser
+import shutil
 
 # 错误码
 ERROR_PARAMETERS_COUNT = 1  # 参数数量错误
 ERROR_PARAMETERS_TYPE = 2   # 参数错误
 ERROR_NEED_PODS = 3         # Pods 目录不存在或不完整
 ERROR_FILE_CORRUPTED = 4    # 文件损坏或格式不正确
+ERROR_FILE_NOT_EXIST = 5    # 文件不存在
 
 # 文件名长度
 SELF_FILENAME_LEN = len(sys.argv[0].split('/')[-1])
@@ -120,6 +122,11 @@ def generatePodListFromList(manifestPodList):
 
 # 生成依赖关系图
 def generateDependencyGraph(podlist):
+    # Directory
+    directory = podFilePath() + "EFPADiagram"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
     # Setting
     cc = open(podFilePath() + "EFPAConfig.json", "r+")
     configString = cc.read()
@@ -127,12 +134,12 @@ def generateDependencyGraph(podlist):
 
     configObject = json.loads(configString)
 
-    settingTitle = sys.argv[1][:-8].split('/')[-1]
+    settingTitle = podFileDirectoryName()
     settingCategories = json.dumps(configObject['config']['categories'])
     settingCategoryRegexes = configObject['config']['categoryRegexes']
     settingContent = "setting = '{\"setting\": {\"title\": \"" + \
         settingTitle + "\",\"categories\": " + str(settingCategories) + "}}';"
-    xx = open(selfFilePath() + "docs/setting.json", "wr+")
+    xx = open(podFilePath() + "EFPADiagram/setting.json", "wr+")
     xx.write(settingContent)
     xx.close()
 
@@ -177,14 +184,25 @@ def generateDependencyGraph(podlist):
 
     dataContent = "data = \'" + dataTemplate.replace("$nodes$", nodeString).replace(
         "$edges$", edgeString).replace("\n", "") + "\';"
-    xx = open(selfFilePath() + "docs/data.json", "wr+")
+    xx = open(podFilePath() + "EFPADiagram/data.json", "wr+")
     xx.write(dataContent)
     xx.close()
 
-    graphHtmlPath = selfFilePath() + "docs/index.html"
+    # JS
+    directoryJS = podFilePath() + "EFPADiagram/js"
+    if not os.path.exists(directoryJS):
+        os.makedirs(directoryJS)
+    shutil.copy(selfFilePath() + "EFPADiagram/js/dataTool.js", directoryJS + "/dataTool.js")
+    shutil.copy(selfFilePath() + "EFPADiagram/js/echarts.min.js", directoryJS + "/echarts.min.js")
+    shutil.copy(selfFilePath() + "EFPADiagram/js/jquery.min.js", directoryJS + "/jquery.min.js")
+    shutil.copy(selfFilePath() + "EFPADiagram/js/xml2json.min.js", directoryJS + "/xml2json.min.js")
+
+    # HTML
+    graphHtmlPath = podFilePath() + "EFPADiagram/index.html"
+    shutil.copy(selfFilePath() + "EFPADiagram/index.html", graphHtmlPath)
     print("Dependency graph generated: " + graphHtmlPath)
 
-    webbrowser.open("file://" + graphHtmlPath)
+    # webbrowser.open("file://" + graphHtmlPath)
 
     return
 
@@ -217,6 +235,12 @@ def main():
     if True != os.path.exists(manifestFileName):
         print('Error: Please run `pod install` first!')
         exit(ERROR_NEED_PODS)
+
+    # 判断目标目录下的 EFPAConfig.json 是否存在，否则返回错误
+    configFileName = podFilePath() + '/EFPAConfig.json'
+    if True != os.path.exists(configFileName):
+        print('Error: EFPAConfig.json not found!')
+        exit(ERROR_FILE_NOT_EXIST)
 
     # 读取 PODS 依赖关系并生成依赖关系数组
     manifestPodlist = readManifestPodListFromFile(manifestFileName)
