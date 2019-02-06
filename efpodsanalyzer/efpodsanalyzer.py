@@ -21,6 +21,12 @@ ERROR_FILE_NOT_EXIST = 5    # 文件不存在
 SELF_FILENAME_LEN = len(sys.argv[0].split('/')[-1])
 POD_FILENAME_LEN = len(sys.argv[1].split('/')[-1])
 
+# 路径相关
+PROJECT_NAME = "efpodsanalyzer"
+MODULE_NAME = PROJECT_NAME.lower()
+ROOT_PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODULE_DIR = os.path.join(ROOT_PROJECT_DIR, MODULE_NAME)
+
 # 原始数据单元
 class ManifestPodClass:
     'Manifest中取出的未处理数据单元'
@@ -178,7 +184,7 @@ def generateDependencyGraph(podlist):
     if edgeString.endswith(","):
         edgeString = edgeString[:-1]
 
-    oo = open(selfFilePath() + "template/data.json", "r+")
+    oo = open(resourcePath("template/data.json"), "r+")
     dataTemplate = oo.read()
     oo.close()
 
@@ -192,19 +198,23 @@ def generateDependencyGraph(podlist):
     directoryJS = podFilePath() + "EFPADiagram/js"
     if not os.path.exists(directoryJS):
         os.makedirs(directoryJS)
-    shutil.copy(selfFilePath() + "EFPADiagram/js/dataTool.js", directoryJS + "/dataTool.js")
-    shutil.copy(selfFilePath() + "EFPADiagram/js/echarts.min.js", directoryJS + "/echarts.min.js")
-    shutil.copy(selfFilePath() + "EFPADiagram/js/jquery.min.js", directoryJS + "/jquery.min.js")
-    shutil.copy(selfFilePath() + "EFPADiagram/js/xml2json.min.js", directoryJS + "/xml2json.min.js")
+    shutil.copy(resourcePath("EFPADiagram/js/dataTool.js"), directoryJS + "/dataTool.js")
+    shutil.copy(resourcePath("EFPADiagram/js/echarts.min.js"), directoryJS + "/echarts.min.js")
+    shutil.copy(resourcePath("EFPADiagram/js/jquery.min.js"), directoryJS + "/jquery.min.js")
+    shutil.copy(resourcePath("EFPADiagram/js/xml2json.min.js"), directoryJS + "/xml2json.min.js")
 
     # HTML
     graphHtmlPath = podFilePath() + "EFPADiagram/index.html"
-    shutil.copy(selfFilePath() + "EFPADiagram/index.html", graphHtmlPath)
+    shutil.copy(resourcePath("EFPADiagram/index.html"), graphHtmlPath)
     print("Dependency graph generated: " + graphHtmlPath)
 
     # webbrowser.open("file://" + graphHtmlPath)
 
     return
+
+# 生成资源文件目录访问路径
+def resourcePath(relativePath):
+    return os.path.join(MODULE_DIR, relativePath)
 
 # 当前文件所在路径
 def selfFilePath():
@@ -252,4 +262,5 @@ def main():
     generateDependencyGraph(podlist)
 
 # 执行
-main()
+if __name__ == "__main__":
+    main()

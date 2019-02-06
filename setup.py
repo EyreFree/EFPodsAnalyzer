@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "efpodsanalyzer",
-    version = "0.1.0",
+    version = "0.1.4",
     keywords = ("pip", "eyrefree", "cocoapods", "analyzer", "efpodsanalyzer"),
     description = "CocoaPods dependency analysis tool",
     long_description = "CocoaPods dependency analysis tool",
@@ -25,6 +25,12 @@ setup(
 
     packages = find_packages(),
     include_package_data = True,
+    package_data={'efpodsanalyzer': ['EFPADiagram/*.html', 'EFPADiagram/*.json', 'EFPADiagram/js/*', 'template/*', 'EFPAConfig.json']},
     platforms = "any",
-    install_requires = []
+    install_requires = [],
+    entry_points={
+        'console_scripts':[
+            'efpodsanalyzer = efpodsanalyzer.efpodsanalyzer:main'
+        ]
+    }
 )
