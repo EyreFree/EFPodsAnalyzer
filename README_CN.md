@@ -37,6 +37,16 @@ Pods 库越多、依赖关系越复杂的库，越是用得到本工具，例如
 
 ## 安装
 
+### PyPI
+
+如果你的设备上已经安装了 pip 的话，可以使用如下命令直接安装本工具的最新版：
+
+```
+sudo pip install efpodsanalyzer --upgrade
+```
+
+### 手动
+
 下载本仓库，或执行如下命令将本仓库 Clone 到本地：
 
 ```
@@ -45,19 +55,40 @@ git clone git@github.com:EyreFree/EFPodsAnalyzer.git
 
 ## 使用
 
+### PyPI
+
+1. 首先确保你的工程已进行 `pod install` 操作并成功生成了 Pods 目录；
+2. 利用 pip 完成本工具 efpodsanalyzer 的安装；
+3. 根据待分析项目的具体情况对依赖的库进行分类，并分别给出每个分类的正则对依赖的名称进行归类，然后将分类规则写到你的 Podfile 所在目录下的 `EFPAConfig.json` 文件中（EFPAConfig.json 结构参考下面的示例）；
+4. 执行如下命令进行依赖关系图的生成：
+
+```
+sudo efpodsanalyzer [待分析项目的 Podfile 文件路径]
+```
+
+5. 查看终端的输出，若有看到如下日志表示生成完成，可用浏览器打开生成的关系图文件 `index.html`，即可进行浏览：
+
+```
+Dependency graph generated: .../EFPADiagram/index.html
+```
+
+若抛错的话请根据对应的错误信息进行处理，有其他问题欢迎 PR 或 Issue。
+
+### 手动
+
 1. 首先确保你的工程已进行 `pod install` 操作并成功生成了 Pods 目录；
 2. 本仓库内容已完整下载到本地；
-3. 根据待分析项目的具体情况对依赖的库进行分类，并分别给出每个分类的正则对依赖的名称进行归类，然后将分类规则写到 EFPodsAnalyzer 根目录下的 `config.json` 文件中；
+3. 根据待分析项目的具体情况对依赖的库进行分类，并分别给出每个分类的正则对依赖的名称进行归类，然后将分类规则写到你的 Podfile 所在目录下的 `EFPAConfig.json` 文件中（EFPAConfig.json 结构参考下面的示例）；
 4. 执行如下命令进行依赖关系图的生成：
 
 ```
 python [EFPodsAnalyzer.py 文件路径] [待分析项目的 Podfile 文件路径]
 ```
 
-5. 生成完成时会自动通过浏览器打开；如果浏览器木有反应的话，可以查看终端的输出，若有看到如下日志可手动打开生成的关系图文件：
+5. 查看终端的输出，若有看到如下日志表示生成完成，可用浏览器打开生成的关系图文件 `index.html`，即可进行浏览：
 
 ```
-Dependency graph generated: .../EFPodsAnalyzer/doc/index.html
+Dependency graph generated: .../EFPADiagram/index.html
 ```
 
 若抛错的话请根据对应的错误信息进行处理，有其他问题欢迎 PR 或 Issue。
@@ -66,7 +97,7 @@ Dependency graph generated: .../EFPodsAnalyzer/doc/index.html
 
 这里我们以 [Coding 的开源 iOS 客户端](https://github.com/Coding/Coding-iOS) 为例，给大家演示一下完整的使用过程：
 
-1. 首先下载本仓库内容到本地；
+1. 利用 pip 完成本工具 efpodsanalyzer 的安装；
 2. 然后下载 Coding iOS 端工程到本地，并进行 `pod install` 操作；
 3. 因为这里 Coding 客户端的依赖基本没啥可归类的，都是第三方库；所以出于演示目的，这里我分为了「以 M 开头的库」、「以 Kit 结尾的库」和「其它」三类，对应的 `config.json` 如下：
 
@@ -82,7 +113,7 @@ Dependency graph generated: .../EFPodsAnalyzer/doc/index.html
 4. 关系图生成的命令如下：
 
 ```
-python /Users/eyrefree/Documents/iOS_GitHub/EFPodsAnalyzer/EFPodsAnalyzer.py /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
+sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 ```
 
 5. 最后生成的依赖关系图如下：
@@ -98,11 +129,19 @@ python /Users/eyrefree/Documents/iOS_GitHub/EFPodsAnalyzer/EFPodsAnalyzer.py /Us
 ## 计划
 
 - 根据头文件引用进一步判断依赖是否需要移除；
-- 根据类依赖关系进一步判断依赖是否需要移除。
+- 根据类依赖关系进一步判断依赖是否需要移除；
+- 支持更多关系图样式。
 
 ## 其它
 
-依赖图的展示使用了 [ECharts](https://github.com/ecomfe/echarts) 图表库和 [xml2json](https://github.com/abdmob/x2js) 解析库，在此对这些项目的开发人员表示感谢！
+1. 依赖图的展示使用了 [ECharts](https://github.com/ecomfe/echarts) 图表库和 [xml2json](https://github.com/abdmob/x2js) 解析库，在此对这些项目的开发人员表示感谢！
+2. 本仓库代码可使用如下命令打包 / 发布，有二次开发需求的同学可自行摸索（请在本仓库根目录下执行）：
+
+```
+rm -rf dist/*;
+python setup.py sdist bdist_wheel;
+twine upload dist/efpodsanalyzer*;
+```
 
 ## 作者
 
