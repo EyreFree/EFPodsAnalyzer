@@ -1,6 +1,9 @@
 ![](assets/headimage.png)
 
 <p align="center">
+    <a href="https://pypi.org/project/efpodsanalyzer/">
+        <img src="https://badge.fury.io/py/efpodsanalyzer.svg">
+    </a>
     <a href="https://www.python.org/">
         <img src="https://img.shields.io/badge/language-Python-2e6fa0.svg">
     </a>
