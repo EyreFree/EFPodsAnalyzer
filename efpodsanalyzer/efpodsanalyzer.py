@@ -50,6 +50,7 @@ class PodClass:
     '处理后的数据单元'
     podName = ''
     podDependencyIndexes = []
+    podReferenceCount = 1
 
     def __init__(self, name, dependencyIndexes):
         self.podName = name
@@ -119,11 +120,14 @@ def generatePodListFromList(manifestPodList):
     while 0 < len(nextList):
         doingList = list(nextList)
         for manifestPod in doingList:
-            baseIndexes = getBaseIndexes(
-                manifestPod.podDependencies, returnList)
+            baseIndexes = getBaseIndexes(manifestPod.podDependencies, returnList)
             if len(baseIndexes) == len(manifestPod.podDependencies):
                 returnList.append(PodClass(manifestPod.podName, baseIndexes))
                 nextList.remove(manifestPod)
+                # 权重
+                for baseIndex in baseIndexes:
+                    returnList[baseIndex].podReferenceCount += 1
+                    # print(str(baseIndex) + "+= 1, podReferenceCount = " + str(returnList[baseIndex].podReferenceCount))
     return returnList
 
 # 生成依赖关系图
@@ -152,6 +156,7 @@ def generateDependencyGraph(podlist):
     # Data
     nodeString = ""
     for index, pod in enumerate(podlist):
+        podValue = str(pod.podReferenceCount)
         podID = str(index)
         podLabel = pod.podName
         podAttvalue = str(1)
@@ -162,7 +167,9 @@ def generateDependencyGraph(podlist):
                 break
 
         nodeString = nodeString + "{\"attvalues\": {\"attvalue\": {\"_for\": \"modularity_class\",\"_value\": \"" + podAttvalue + \
-            "\"}},\"size\": {\"_value\": \"24\",\"__prefix\": \"viz\"},\"position\": {\"_x\": \"-225.73984\",\"_y\": \"82.41631\",\"_z\": \"0.0\",\"__prefix\": \"viz\"},\"color\": {\"_r\": \"236\",\"_g\": \"81\",\"_b\": \"72\",\"__prefix\": \"viz\"},\"_id\": \"" + podID + "\",\"_label\": \"" + podLabel + "\"}"
+            "\"}},\"size\": {\"_value\": \"" + podValue + "\",\"__prefix\": \"viz\"},\"position\": {\"_x\": \"-225.73984\",\"_" + \
+            "y\": \"82.41631\",\"_z\": \"0.0\",\"__prefix\": \"viz\"},\"color\": {\"_r\": \"236\",\"_g\": \"81\",\"_b\": \"72\"" + \
+            ",\"__prefix\": \"viz\"},\"_id\": \"" + podID + "\",\"_label\": \"" + podLabel + "\"}"
         nodeString = nodeString + ","
 
     if nodeString.endswith(","):
@@ -178,7 +185,7 @@ def generateDependencyGraph(podlist):
                 podTarget = str(podDependencyIndex)
                 edgeIndex += 1
                 edgeString = edgeString + "{\"attvalues\": \"\",\"_id\": \"" + podID + "\",\"_source\": \"" + \
-                    podSource + "\",\"_target\": \"" + podTarget + "\",\"_weight\": \"17.0\"}"
+                    podSource + "\",\"_target\": \"" + podTarget + "\",\"_weight\": \"16.0\"}"
                 edgeString = edgeString + ","
 
     if edgeString.endswith(","):
@@ -188,8 +195,7 @@ def generateDependencyGraph(podlist):
     dataTemplate = oo.read()
     oo.close()
 
-    dataContent = "data = \'" + dataTemplate.replace("$nodes$", nodeString).replace(
-        "$edges$", edgeString).replace("\n", "") + "\';"
+    dataContent = "data = \'" + dataTemplate.replace("$nodes$", nodeString).replace("$edges$", edgeString).replace("\n", "") + "\';"
     xx = open(podFilePath() + "EFPADiagram/data.json", "wr+")
     xx.write(dataContent)
     xx.close()
