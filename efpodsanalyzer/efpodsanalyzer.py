@@ -210,8 +210,9 @@ def generateDependencyGraph(podlist):
     shutil.copy(resourcePath("EFPADiagram/js/xml2json.min.js"), directoryJS + "/xml2json.min.js")
 
     # HTML
-    graphHtmlPath = podFilePath() + "EFPADiagram/index.html"
-    shutil.copy(resourcePath("EFPADiagram/index.html"), graphHtmlPath)
+    graphHtmlPath = podFilePath() + "EFPADiagram/"
+    shutil.copy(resourcePath("EFPADiagram/graph_circular.html"), graphHtmlPath + "graph_circular.html")
+    shutil.copy(resourcePath("EFPADiagram/graph_force.html"), graphHtmlPath + "graph_force.html")
     print("Dependency graph generated: " + graphHtmlPath)
 
     # webbrowser.open("file://" + graphHtmlPath)

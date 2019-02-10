@@ -15,8 +15,8 @@
 </head>
 
 <body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 1024px;height:768px;"></div>
+    <!-- 为ECharts准备一个铺满浏览器的Dom -->
+    <div id="main" style="width: 100%; height:100%; position: absolute; margin: 0; padding: 0;"></div>
     <script type="text/javascript">
         var myChart = echarts.init(document.getElementById('main'));
 
@@ -39,48 +39,59 @@
                 name: settingObj.categories[i]
             };
         }
-        graph.nodes.forEach(function(node) {
+        graph.nodes.forEach(function (node) {
             node.itemStyle = null;
             node.value = node.symbolSize;
-            node.symbolSize = 14;
-            //console.log(node.symbolSize);
+            node.symbolSize = node.symbolSize * 3;
             node.category = node.attributes.modularity_class;
-            // Use random x, y
-            node.x = node.y = null;
-            node.draggable = true;
+            node.label = {
+                normal: {
+                    show: node.value > 1
+                }
+            };
         });
         option = {
             title: {
                 text: settingObj.title,
-                subtext: 'Default layout',
+                subtext: 'Circular layout',
                 top: 'bottom',
                 left: 'right'
             },
             tooltip: {},
             legend: [{
                 // selectedMode: 'single',
-                data: categories.map(function(a) {
+                data: categories.map(function (a) {
                     return a.name;
                 })
             }],
-            animation: false,
-            series: [{
-                //name: settingObj.title,
-                type: 'graph',
-                layout: 'force',
-                data: graph.nodes,
-                links: graph.links,
-                categories: categories,
-                roam: true,
-                label: {
-                    normal: {
-                        position: 'right'
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series : [
+                {
+                    //name: 'Les Miserables',
+                    type: 'graph',
+                    layout: 'circular',
+                    circular: {
+                        rotateLabel: true
+                    },
+                    data: graph.nodes,
+                    links: graph.links,
+                    categories: categories,
+                    roam: true,
+                    label: {
+                        normal: {
+                            position: 'right',
+                            formatter: '{b}'
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: 'source',
+                            curveness: 0.3
+                        }
                     }
-                },
-                force: {
-                    repulsion: 100
                 }
-            }]
+            ]
         };
 
         myChart.setOption(option);
