@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>EFPodsAnalyzer</title>
+    <!-- 依赖 -->
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script type="text/javascript" src="js/dataTool.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/xml2json.min.js"></script>
+    <!-- 数据 -->
+    <script type="text/javascript" src="data.json"></script>
+    <script type="text/javascript" src="setting.json"></script>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个铺满浏览器的Dom -->
+    <div id="main" style="width: 99%; height:98%; position: absolute; margin: 0; padding: 0;"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+
+        myChart.showLoading();
+
+        var settingObj = JSON.parse(setting).setting;
+
+        // Create x2js instance with default config
+        var x2js = new X2JS();
+        var jsonObj = JSON.parse(data);
+        var xml = x2js.json2xml_str(jsonObj);
+
+        //$.get('les-miserables.gexf', function(xml) {
+        myChart.hideLoading();
+
+        var graph = echarts.dataTool.gexf.parse(xml);
+        var categories = [];
+        for (var i = 0; i < settingObj.categories.length; i++) {
+            categories[i] = {
+                name: settingObj.categories[i]
+            };
+        }
+        graph.nodes.forEach(function (node) {
+            node.itemStyle = null;
+            node.value = node.symbolSize;
+            node.symbolSize = node.symbolSize * 3;
+            node.category = node.attributes.modularity_class;
+            node.label = {
+                normal: {
+                    show: node.value > 1
+                }
+            };
+        });
+        option = {
+            title: {
+                text: settingObj.title,
+                subtext: 'Circular layout',
+                top: 'bottom',
+                left: 'right'
+            },
+            tooltip: {},
+            legend: [{
+                // selectedMode: 'single',
+                data: categories.map(function (a) {
+                    return a.name;
+                })
+            }],
+            animationDurationUpdate: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series : [
+                {
+                    //name: 'Les Miserables',
+                    type: 'graph',
+                    layout: 'circular',
+                    circular: {
+                        rotateLabel: true
+                    },
+                    data: graph.nodes,
+                    links: graph.links,
+                    categories: categories,
+                    roam: true,
+                    label: {
+                        normal: {
+                            position: 'right',
+                            formatter: '{b}'
+                        }
+                    },
+                    lineStyle: {
+                        normal: {
+                            color: 'source',
+                            curveness: 0.3
+                        }
+                    }
+                }
+            ]
+        };
+
+        myChart.setOption(option);
+        //}, 'xml');
+    </script>
+</body>
+
+</html>

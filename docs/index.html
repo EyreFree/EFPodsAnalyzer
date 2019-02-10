@@ -1,90 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="utf-8">
-    <title>EFPodsAnalyzer</title>
-    <!-- 依赖 -->
-    <script type="text/javascript" src="js/echarts.min.js"></script>
-    <script type="text/javascript" src="js/dataTool.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/xml2json.min.js"></script>
-    <!-- 数据 -->
-    <script type="text/javascript" src="data.json"></script>
-    <script type="text/javascript" src="setting.json"></script>
-</head>
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>EFPodsAnalyzer | CocoaPods dependency analysis tool.</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="EFPodsAnalyzer" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="CocoaPods dependency analysis tool." />
+<meta property="og:description" content="CocoaPods dependency analysis tool." />
+<link rel="canonical" href="https://www.eyrefree.org/EFPodsAnalyzer/" />
+<meta property="og:url" content="https://www.eyrefree.org/EFPodsAnalyzer/" />
+<meta property="og:site_name" content="EFPodsAnalyzer" />
+<script type="application/ld+json">
+{"@type":"WebSite","url":"https://www.eyrefree.org/EFPodsAnalyzer/","headline":"EFPodsAnalyzer","name":"EFPodsAnalyzer","description":"CocoaPods dependency analysis tool.","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
 
-<body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 1024px;height:768px;"></div>
-    <script type="text/javascript">
-        var myChart = echarts.init(document.getElementById('main'));
+    <link rel="stylesheet" href="https://www.eyrefree.org/EFPodsAnalyzer/assets/css/style.css">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <p><img src="https://raw.githubusercontent.com/EyreFree/EFPodsAnalyzer/master/assets/headimage.png" alt="" /></p>
 
-        myChart.showLoading();
+<p>EFPodsAnalyzer is a Python script that is used to help us sort out the CoaoaPods library dependency relationship. The analysis results are as follows:</p>
 
-        var settingObj = JSON.parse(setting).setting;
+<h2 id="result">Result</h2>
 
-        // Create x2js instance with default config
-        var x2js = new X2JS();
-        var jsonObj = JSON.parse(data);
-        var xml = x2js.json2xml_str(jsonObj);
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Index</th>
+      <th style="text-align: center">Description</th>
+      <th style="text-align: center">Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: center">Graph: circular layout</td>
+      <td style="text-align: center"><a href="graph_circular.html">graph_circular.html</a></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2</td>
+      <td style="text-align: center">Graph: force layout</td>
+      <td style="text-align: center"><a href="graph_force.html">graph_force.html</a></td>
+    </tr>
+  </tbody>
+</table>
 
-        //$.get('les-miserables.gexf', function(xml) {
-        myChart.hideLoading();
 
-        var graph = echarts.dataTool.gexf.parse(xml);
-        var categories = [];
-        for (var i = 0; i < settingObj.categories.length; i++) {
-            categories[i] = {
-                name: settingObj.categories[i]
-            };
-        }
-        graph.nodes.forEach(function(node) {
-            node.itemStyle = null;
-            node.symbolSize = 12;
-            node.value = node.symbolSize;
-            node.category = node.attributes.modularity_class;
-            // Use random x, y
-            node.x = node.y = null;
-            node.draggable = true;
-        });
-        option = {
-            title: {
-                text: settingObj.title,
-                subtext: 'Default layout',
-                top: 'bottom',
-                left: 'right'
-            },
-            tooltip: {},
-            legend: [{
-                // selectedMode: 'single',
-                data: categories.map(function(a) {
-                    return a.name;
-                })
-            }],
-            animation: false,
-            series: [{
-                //name: settingObj.title,
-                type: 'graph',
-                layout: 'force',
-                data: graph.nodes,
-                links: graph.links,
-                categories: categories,
-                roam: true,
-                label: {
-                    normal: {
-                        position: 'right'
-                    }
-                },
-                force: {
-                    repulsion: 100
-                }
-            }]
-        };
-
-        myChart.setOption(option);
-        //}, 'xml');
-    </script>
-</body>
-
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        For more information, goto <a href="https://github.com/EyreFree/EFPodsAnalyzer">homepage of EFPodsAnalyzer</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
 </html>
