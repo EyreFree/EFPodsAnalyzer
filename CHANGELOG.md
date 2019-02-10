@@ -2,6 +2,14 @@
 
 -----
 
+## [0.2.1](https://github.com/EFPrefix/EFQRCode/releases/tag/0.2.1) (2019-02-10)
+
+#### Fix
+
+* Fix `style.css`.
+
+---
+
 ## [0.2.0](https://github.com/EFPrefix/EFQRCode/releases/tag/0.2.0) (2019-02-10)
 
 #### Add
