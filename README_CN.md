@@ -102,7 +102,7 @@ Dependency graph generated: .../EFPADiagram/index.html
 
 1. 利用 pip 完成本工具 efpodsanalyzer 的安装；
 2. 然后下载 Coding iOS 端工程到本地，并进行 `pod install` 操作；
-3. 因为这里 Coding 客户端的依赖基本没啥可归类的，都是第三方库；所以出于演示目的，这里我分为了「以 M 开头的库」、「以 Kit 结尾的库」和「其它」三类，对应的 `EFPAConfig.json` 如下（你也可以 [点击此处](https://github.com/EyreFree/EFPodsAnalyzer/blob/master/efpodsanalyzer/EFPAConfig.json) 在线查看配置文件示例）：
+3. 因为这里 Coding 客户端的依赖基本没啥可归类的，都是第三方库；所以出于演示目的，这里我分为了「以 M 开头的库」、「以 Kit 结尾的库」和「其它」三类，对应的 `EFPAConfig.json` 如下（你也可以 [点击此处](/efpodsanalyzer/EFPAConfig.json) 在线查看配置文件示例）：
 
 ```
 {
@@ -119,7 +119,7 @@ Dependency graph generated: .../EFPADiagram/index.html
 sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 ```
 
-5. 最后生成的依赖关系图如下，你可以进行 [在线预览](https://eyrefree.github.io/EFPodsAnalyzer/graph_force.html)：
+5. 最后生成的依赖关系图如下，你可以进行 [在线预览](https://eyrefree.github.io/EFPodsAnalyzer/docs/graph_force.html)：
 
 ![](assets/example.png)
 
@@ -127,7 +127,7 @@ sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 - 鼠标悬浮于节点上可显示节点名；
 - 鼠标悬浮于两点之间的连线上可显示两节点之间的依赖关系。
 
-另一种样式 `circular`，如下图所示，同样可以 [在线预览](https://eyrefree.github.io/EFPodsAnalyzer/graph_circular.html)：
+另一种样式 `circular`，如下图所示，同样可以 [在线预览](https://eyrefree.github.io/EFPodsAnalyzer/docs/graph_circular.html)：
 
 ![](assets/example_circular.png)
 

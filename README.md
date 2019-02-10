@@ -102,7 +102,7 @@ Here we take [Coding's open source iOS client](https://github.com/Coding/Coding-
 
 1. First, install `efpodsanalyzer` on your device with `pip`.
 2. Then download the Coding iOS project to local, and perform `pod install` operation;
-3. Because the dependency of the Coding client is basically not classified, which is all the third party library. Therefore, for demonstration purposes, I divide it into three categories: the library with the beginning of 'M', the library ending with 'Kit' and the others. The `EFPAConfig.json` is as follows(You can also [click here](https://github.com/EyreFree/EFPodsAnalyzer/blob/master/efpodsanalyzer/EFPAConfig.json) to see the sample file online):
+3. Because the dependency of the Coding client is basically not classified, which is all the third party library. Therefore, for demonstration purposes, I divide it into three categories: the library with the beginning of 'M', the library ending with 'Kit' and the others. The `EFPAConfig.json` is as follows(You can also [click here](/efpodsanalyzer/EFPAConfig.json) to see the sample file online):
 
 ```
 {
@@ -119,7 +119,7 @@ Here we take [Coding's open source iOS client](https://github.com/Coding/Coding-
 sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 ```
 
-5. The final dependency graph is generated as follows, you can also [view it online](https://eyrefree.github.io/EFPodsAnalyzer/graph_force.html):
+5. The final dependency graph is generated as follows, you can also [view it online](https://eyrefree.github.io/EFPodsAnalyzer/docs/graph_force.html):
 
 ![](assets/example.png)
 
@@ -127,7 +127,7 @@ sudo efpodsanalyzer /Users/eyrefree/Documents/iOS_GitHub/Coding-iOS/Podfile
 - The mouse can be suspended on the node to display the node name;
 - The mouse can be suspended on the line between two nodes to display the relationship of them.
 
-Another style `circular`, as follows, you can [view it online](https://eyrefree.github.io/EFPodsAnalyzer/graph_circular.html) too:
+Another style `circular`, as follows, you can [view it online](https://eyrefree.github.io/EFPodsAnalyzer/docs/graph_circular.html) too:
 
 ![](assets/example_circular.png)
 
