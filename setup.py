@@ -25,7 +25,15 @@ setup(
 
     packages = find_packages(),
     include_package_data = True,
-    package_data={'efpodsanalyzer': ['EFPADiagram/*.html', 'EFPADiagram/*.json', 'EFPADiagram/js/*', 'template/*', 'EFPAConfig.json']},
+    package_data={
+        'efpodsanalyzer': [
+            'EFPADiagram/*.html', 
+            'EFPADiagram/js/*',
+            'EFPADiagram/css/*', 
+            'template/*', 
+            'EFPAConfig.json'
+        ]
+    },
     platforms = "any",
     install_requires = [],
     entry_points={

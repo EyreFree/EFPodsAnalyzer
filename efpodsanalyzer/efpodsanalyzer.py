@@ -209,6 +209,12 @@ def generateDependencyGraph(podlist):
     shutil.copy(resourcePath("EFPADiagram/js/jquery.min.js"), directoryJS + "/jquery.min.js")
     shutil.copy(resourcePath("EFPADiagram/js/xml2json.min.js"), directoryJS + "/xml2json.min.js")
 
+    # CSS
+    directoryCSS = podFilePath() + "EFPADiagram/css"
+    if not os.path.exists(directoryCSS):
+        os.makedirs(directoryCSS)
+    shutil.copy(resourcePath("EFPADiagram/css/style.css"), directoryCSS + "/style.css")
+
     # HTML
     graphHtmlPath = podFilePath() + "EFPADiagram/"
     shutil.copy(resourcePath("EFPADiagram/graph_circular.html"), graphHtmlPath + "graph_circular.html")
