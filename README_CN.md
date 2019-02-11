@@ -42,7 +42,7 @@ Pods 库越多、依赖关系越复杂的库，越是用得到本工具，例如
 
 ### PyPI
 
-如果你的设备上已经安装了 pip 的话，可以使用如下命令直接安装本工具的最新版：
+如果你的设备上已经安装了 [pip](https://github.com/pypa/pip) 的话，可以使用如下命令直接安装本工具的最新版：
 
 ```
 sudo pip install efpodsanalyzer --upgrade

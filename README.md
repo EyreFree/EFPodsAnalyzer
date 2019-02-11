@@ -42,7 +42,7 @@ The more the Pods library is, the more complex the library is, the more it is us
 
 ### PyPI
 
-If you have `pip` installed on your device, you can install the latest version of this tool directly with the following commands:
+If you have [pip](https://github.com/pypa/pip) installed on your device, you can install the latest version of this tool directly with the following commands:
 
 ```
 sudo pip install efpodsanalyzer --upgrade
