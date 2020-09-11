@@ -131,16 +131,11 @@ def generatePodListFromList(manifestPodList):
     return returnList
 
 # 生成依赖关系图
-def generateDependencyGraph(podlist):
+def generateDependencyGraph(podlist, configString):
     # Directory
     directory = podFilePath() + "EFPADiagram"
     if not os.path.exists(directory):
         os.makedirs(directory)
-
-    # Setting
-    cc = open(podFilePath() + "EFPAConfig.json", "r+")
-    configString = cc.read()
-    cc.close()
 
     configObject = json.loads(configString)
 
@@ -260,11 +255,20 @@ def main():
         print('Error: Please run `pod install` first!')
         exit(ERROR_NEED_PODS)
 
-    # 判断目标目录下的 EFPAConfig.json 是否存在，否则返回错误
+    # 判断目标目录下的 EFPAConfig.json 是否存在，如果不存在的话，则使用默认的配置文件
     configFileName = podFilePath() + '/EFPAConfig.json'
-    if True != os.path.exists(configFileName):
-        print('Error: EFPAConfig.json not found!')
-        exit(ERROR_FILE_NOT_EXIST)
+    configString = '''
+    {
+        "config": {
+            "categories": ["Other"],
+            "categoryRegexes": [".*"]
+        }
+    }
+    '''
+    if True == os.path.exists(configFileName):
+        cc = open(podFilePath() + "EFPAConfig.json", "r+")
+        configString = cc.read()
+        cc.close()
 
     # 读取 PODS 依赖关系并生成依赖关系数组
     manifestPodlist = readManifestPodListFromFile(manifestFileName)
@@ -273,7 +277,7 @@ def main():
     # PodClass.printList(podlist)
 
     # 生成依赖关系页面
-    generateDependencyGraph(podlist)
+    generateDependencyGraph(podlist, configString)
 
 # 执行
 if __name__ == "__main__":
