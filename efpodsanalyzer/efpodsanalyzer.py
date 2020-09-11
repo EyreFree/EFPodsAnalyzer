@@ -144,7 +144,7 @@ def generateDependencyGraph(podlist, configString):
     settingCategoryRegexes = configObject['config']['categoryRegexes']
     settingContent = "setting = '{\"setting\": {\"title\": \"" + \
         settingTitle + "\",\"categories\": " + str(settingCategories) + "}}';"
-    xx = open(podFilePath() + "EFPADiagram/setting.json", "wr+")
+    xx = open(podFilePath() + "EFPADiagram/setting.json", "w+")
     xx.write(settingContent)
     xx.close()
 
@@ -191,7 +191,7 @@ def generateDependencyGraph(podlist, configString):
     oo.close()
 
     dataContent = "data = \'" + dataTemplate.replace("$nodes$", nodeString).replace("$edges$", edgeString).replace("\n", "") + "\';"
-    xx = open(podFilePath() + "EFPADiagram/data.json", "wr+")
+    xx = open(podFilePath() + "EFPADiagram/data.json", "w+")
     xx.write(dataContent)
     xx.close()
 
