@@ -2,6 +2,14 @@
 
 -----
 
+## [0.2.3](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.3) (2020-09-11)
+
+#### Fix
+
+* Fix `ValueError: must have exactly one of create/read/write/append mode`.
+
+---
+
 ## [0.2.2](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.2) (2020-09-11)
 
 #### Add
