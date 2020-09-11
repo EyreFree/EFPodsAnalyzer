@@ -1,3 +1,4 @@
 include *.js
 include *.html
 include *.json
+include *.css

@@ -24,7 +24,7 @@ setup(
     author_email = "eyrefree@eyrefree.org",
 
     packages = find_packages(),
-    include_package_data = True,
+    #include_package_data = True,
     package_data={
         'efpodsanalyzer': [
             'EFPADiagram/*.html', 
