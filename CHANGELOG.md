@@ -2,6 +2,14 @@
 
 -----
 
+## [0.2.4](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.4) (2020-09-11)
+
+#### Fix
+
+* Fix `include_package_data`.
+
+---
+
 ## [0.2.3](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.3) (2020-09-11)
 
 #### Fix

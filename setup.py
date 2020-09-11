@@ -13,7 +13,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "efpodsanalyzer",
-    version = "0.2.3",
+    version = "0.2.4",
     keywords = ("pip", "eyrefree", "cocoapods", "analyzer", "efpodsanalyzer"),
     description = "CocoaPods dependency analysis tool",
     long_description = "CocoaPods dependency analysis tool",
