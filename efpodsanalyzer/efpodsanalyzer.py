@@ -106,8 +106,10 @@ def generatePodListFromList(manifestPodList):
         if 0 == len(dependencies):
             return returnList
         for dependency in dependencies:
+            #print("dependency: " + dependency)
             tempMark = False
             for index, base in enumerate(baseList):
+                #print("dependency: " + dependency + ", base.podName: " + base.podName)
                 if base.podName == dependency:
                     returnList.append(index)
                     tempMark = True
@@ -128,6 +130,18 @@ def generatePodListFromList(manifestPodList):
                 for baseIndex in baseIndexes:
                     returnList[baseIndex].podReferenceCount += 1
                     # print(str(baseIndex) + "+= 1, podReferenceCount = " + str(returnList[baseIndex].podReferenceCount))
+            else:
+                # 解决一种奇怪的特殊情况
+                for podDependencie in manifestPod.podDependencies:
+                    checkSpecial = True
+                    for rtnItem in returnList:
+                        if rtnItem.podName == podDependencie:
+                            checkSpecial = False
+                    for nextItem in nextList:
+                        if nextItem.podName == podDependencie:
+                            checkSpecial = False
+                    if checkSpecial == True:
+                        returnList.append(PodClass(podDependencie, []))
     return returnList
 
 # 生成依赖关系图
