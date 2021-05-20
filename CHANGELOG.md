@@ -2,6 +2,14 @@
 
 -----
 
+## [0.2.5](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.5) (2021-05-20)
+
+#### Fix
+
+* Fix dead loop problem caused by sub dependency without first level reference relationship.
+
+---
+
 ## [0.2.4](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.4) (2020-09-11)
 
 #### Fix
