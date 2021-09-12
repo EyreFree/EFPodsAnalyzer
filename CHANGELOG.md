@@ -2,6 +2,12 @@
 
 -----
 
+## [0.2.6](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.6) (2021-09-12)
+
+* Fix issue [#5](https://github.com/EyreFree/EFPodsAnalyzer/issues/5).
+
+---
+
 ## [0.2.5](https://github.com/EyreFree/EFPodsAnalyzer/releases/tag/0.2.5) (2021-05-20)
 
 #### Fix
