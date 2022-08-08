@@ -7,6 +7,7 @@
     <a href="https://www.python.org/">
         <img src="https://img.shields.io/badge/language-Python-2e6fa0.svg">
     </a>
+<a href="https://app.fossa.com/projects/git%2Bgithub.com%2FEyreFree%2FEFPodsAnalyzer?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.com/api/projects/git%2Bgithub.com%2FEyreFree%2FEFPodsAnalyzer.svg?type=shield"/></a>
     <a href="https://codebeat.co/projects/github-com-eyrefree-efpodsanalyzer-master">
         <img src="https://codebeat.co/badges/67a3cc17-24fb-4c3d-b94c-61e17eea08cc"/>
     </a>
@@ -27,6 +28,9 @@
 EFPodsAnalyzer is a Python script that is used to help us sort out the CoaoaPods library dependency relationship. It can generate clear Pods dependency graph with only one command, which will help us in dependency sorting / component cleaning.
 
 > [中文介绍](/README_CN.md)
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FEyreFree%2FEFPodsAnalyzer.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FEyreFree%2FEFPodsAnalyzer?ref=badge_large)
 
 ## Preview
 
